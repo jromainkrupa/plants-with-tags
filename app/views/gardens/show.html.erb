@@ -11,6 +11,14 @@
         <% @garden.plants.each do |plant| %>
           <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= plant.image_url %>)">
             <%= plant.name %>
+
+            <div class="card-tags">
+              <% plant.tags.each do |tag| %>
+              <p><span><%= tag.name %></span></p>
+              <% end %>
+              <%= link_to "+", new_plant_plant_tag_path(plant), class:"btn-primary"  %>
+            </div>
+
             <%= link_to plant_path(plant), method: :delete, data: { confirm: 'Are you sure?' }, class: 'card-remove-link' do %>
               <i class="fas fa-trash"></i>
             <% end %>
@@ -24,10 +32,10 @@
 </div>
 
 <!-- form -->
-<div class="container">
-  <div class="row justify-content-center">
+<div class=" container">
+  <button id="toggle-form">Add a new Plant</button>
+  <div id="form" class="d-none row justify-content-center">
     <div class="col-4">
-      <h4>Add a new plant</h4>
       <%= simple_form_for([@garden, @plant]) do |f| %>
         <%= f.input :name %>
         <%= f.input :image_url %>
